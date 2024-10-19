@@ -44,12 +44,12 @@ utils/: Funções utilitárias que auxiliam no processamento de dados.
 1.**Clone o repositório:**
 
     ```bash
-    git clone https://github.com/seu-usuario/seu-repositorio.git
+    git clone https://github.com/adenilton96/Teste-Dev-PL-Lumi.git
 
 2.**Navegue até o diretório do projeto:**
     
     ```bash
-        cd nome-do-projeto
+        cd Teste-Dev-PL-Lumi
 
 3.**Instale as dependências:**
     
