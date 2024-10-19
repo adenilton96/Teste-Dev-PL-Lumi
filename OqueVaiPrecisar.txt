@@ -1,5 +1,5 @@
 
-    1- migration sequelize
+    1- migration sequelize OK
 
 Rotas
     
@@ -12,8 +12,12 @@ Rotas
         -‘Contrib Ilum Publica Municipal’ – Valor (R$),
         -salvar pdf em base64
 
-    2- pegar os dados das contas 
+    2- pegar os dados das contas ok
     3- fazer download das contas
+
+    4- jest js para fazer os testes
+
+    5- exportar pdf altomaticos 
 
 
 
@@ -43,7 +47,7 @@ ALTER TABLE IF EXISTS public.dados_fatura_energia
 
 npx sequelize-cli db:create // cria o banco
 npx sequelize-cli migration:generete dados_fatura_energia // CIRA MIGRATIONS
-npx sequelize-cli db:migrate
-
+npx sequelize-cli db:migrate // far as migrate pu
+npx sequelize-cli db:migrate:undo
 
 

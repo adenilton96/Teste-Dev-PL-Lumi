@@ -1,60 +1,57 @@
-import dbConnect from '../config/dbConnect.js';
-class DadosContaController {
+import { DadosFaturaEnergia } from '../models/DadosFaturaEnergia.js'; // Modelo Sequelize
+import { converterParaDecimal } from '../utils/converterParaDecimal.js';
 
-     static async getDados(req , res ) {
+class DadosContaController {
+    // Método para obter dados
+    static async getDados(req, res) {
         try {
-            const db = await dbConnect.connect();
-            const res = await db.query("SELECT * FROM public.dados_fatura_energia ORDER BY id ASC ");
-            console.log('recuperou dados do db');
+            const whereClause = req ? { numero_cliente: req } : {};
+            console.log(whereClause);
+            
+            const result = await DadosFaturaEnergia.findAll({
+                where: whereClause,
+                order: [['id', 'ASC']]
+            });
+
+            // Resposta com os dados recuperados
             return {
-                status: 200,
-                dados: res.rows
-            };  
-        } catch (error) {
-            res.status(500).json({ message: `${error.message} - Ocorreu um erro ao retornar os dados` });
-        }
-        
-    }
-    
-    static async inserirdados(dados, res) {
-        try {
-            const db = await dbConnect.connect();
-            const sql = `INSERT INTO public.dados_fatura_energia(
-                            numero_cliente,
-                            mes_referencia,
-                            eng_eletrica_qtd ,
-                            eng_eletrica_valor,
-                            eng_sceee_ims_qtd,
-                            eng_sceee_ims_valor,
-                            eng_compensada_qtd,
-                            eng_compensada_valor,
-                            contrib_ilum_publica_valor,
-                            pdf_base64) 
-                        VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)`;
-           
-            const values = [
-                dados.numero_cliente,
-                dados.mes_referencia,
-                dados.eng_eletrica_qtd,
-                dados.eng_eletrica_valor,
-                dados.eng_sceee_ims_qtd,
-                dados.eng_sceee_ims_valor,
-                dados.eng_compensada_qtd,
-                dados.eng_compensada_valor,
-                dados.contrib_ilum_publica_valor,
-                dados.pdf_base64];
-                console.log(values);
-            const res = await db.query(sql, values);
-           
-            console.log('inseril dados do db');
-            return { 
-                status: 201,
-                message: `Cadastrado com sucesso!`
+                dados: result
             };
         } catch (error) {
-            res.status(500).json({ message: `${error.message} - Ocorreu um erro ao Cadastrar` });
+            console.error(`Erro ao retornar os dados: ${error.message}`);
+            return {
+                message: `${error.message} - Ocorreu um erro ao retornar os dados`
+            };
         }
-        
+    }
+
+    // Método para inserir dados
+    static async inserirDados(dados, res) {
+        try {
+            const novoDado = await DadosFaturaEnergia.create({
+                numero_cliente: dados.numeroCliente,
+                mes_referencia: dados.mesReferencia,
+                eng_eletrica_qtd: dados.energiaEletricaQtd,
+                eng_eletrica_valor: converterParaDecimal(dados.energiaEletricaValor),
+                eng_sceee_ims_qtd: dados.energiaSCEEEQtd,
+                eng_sceee_ims_valor: converterParaDecimal(dados.energiaSCEEEValor),
+                eng_compensada_qtd: dados.energiaCompensadaQtd,
+                eng_compensada_valor: converterParaDecimal(dados.energiaCompensadaValor),
+                contrib_ilum_publica_valor: converterParaDecimal(dados.iluminacaoPublica),
+                pdf: dados.pdf_base64
+            });
+
+            return {
+                message: 'Cadastrado com sucesso!',
+                dado: novoDado
+            };
+        } catch (error) {
+            console.error(`Erro ao cadastrar os dados: ${error.message}`);
+            return {
+                message: 'Ocorreu um erro ao cadastrar os dados'
+            };
+        }
     }
 }
- export default DadosContaController;
+
+export default DadosContaController;

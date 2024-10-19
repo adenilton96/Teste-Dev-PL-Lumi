@@ -1,4 +1,3 @@
-'use strict';
 
 const { types } = require('pg');
 
@@ -41,15 +40,15 @@ module.exports = {
         allowNull: false,
       }, 
       eng_compensada_valor : {
-        type: Sequelize.INTEGER,
+        type: Sequelize.DECIMAL(10, 2),
         allowNull: false,
       },
       contrib_ilum_publica_valor: {
         type: Sequelize.DECIMAL(10, 2),
         allowNull: false,
       },
-      pdf_base64: {
-        type: Sequelize.STRING,
+      pdf: {
+        type:  Sequelize.BLOB,
         allowNull: false,
       }
     
