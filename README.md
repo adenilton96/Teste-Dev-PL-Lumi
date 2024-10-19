@@ -278,7 +278,7 @@ Se precisar desfazer uma migração:
 - na pasta **fatuars** dentro de **public** tem dinponivel amgumas faturas de exemplo
     pode ser camado a rota
     
-    **POST /extraiDadosPdfLote**
+    **POST http://localhost:3000/extraiDadosPdfLote**
     
     **Parâmetros do corpo (JSON):**
         
