@@ -1,4 +1,4 @@
-import { DadosFaturaEnergia } from '../models/DadosFaturaEnergia.js'; // Modelo Sequelize
+import { DadosFaturaEnergia } from '../models/DadosFaturaEnergia.js';
 import { converterParaDecimal } from '../utils/converterParaDecimal.js';
 
 class DadosContaController {

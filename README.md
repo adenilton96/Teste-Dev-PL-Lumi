@@ -1,5 +1,6 @@
 # Projeto Node.js - Extrator de Faturas de Energia Elétrica
-Este projeto tem como objetivo desenvolver um sistema para extrair dados de faturas de energia elétrica, armazená-los em um banco de dados PostgreSQL e exibi-los em uma interface web com gráficos e uma biblioteca de faturas. Utilizamos Node.js no back-end e React no front-end.
+Este projeto tem como objetivo desenvolver um sistema para extrair dados de faturas de energia elétrica, armazená-los em um banco de dados PostgreSQL.
+Utilizamos Node.js.
 
 ## Estrutura do Projeto
 
@@ -35,6 +36,7 @@ utils/: Funções utilitárias que auxiliam no processamento de dados.
 - **Node.js (v14+)**
 - **PostgreSQL**
 - **NPM (v6+)**
+- **insomnia ou postman**
 
 ## Passos de Instalação
 
@@ -46,7 +48,7 @@ utils/: Funções utilitárias que auxiliam no processamento de dados.
 2.**Navegue até o diretório do projeto:**
     
     ```bash
-    cd nome-do-projeto
+        cd nome-do-projeto
 
 3.**Instale as dependências:**
     
@@ -74,7 +76,168 @@ utils/: Funções utilitárias que auxiliam no processamento de dados.
 3.**Execute as migrações para criar as tabelas no banco de dados:**
 
     ```bash
+    
     npx sequelize-cli db:migrate
+
+## Rotas da API
+
+Aqui estão as rotas disponíveis na aplicação:
+
+- **GET /dados**
+
+     Rota para obter os dados de todas as fatura de energia
+
+    **Exemplo de resposta:**
+
+    ```json
+
+        {
+            "dados": [
+                {
+                    "id": 1,
+                    "numero_cliente": "7204076116",
+                    "mes_referencia": "2024-03-01",
+                    "eng_eletrica_qtd": 50,
+                    "eng_eletrica_valor": "47.92",
+                    "eng_sceee_ims_qtd": 504,
+                    "eng_sceee_ims_valor": "257.74",
+                    "eng_compensada_qtd": 504,
+                    "eng_compensada_valor": "-245.61",
+                    "contrib_ilum_publica_valor": "49.43",
+                    "pdf": {
+                        "type": "Buffer",
+                        "data": [
+                            74,
+                            86,
+                            ...
+                        ]
+                    }
+                },
+                {
+                    "id": 2,
+                    "numero_cliente": "7204076116",
+                    "mes_referencia": "2024-02-01",
+                    "eng_eletrica_qtd": 50,
+                    "eng_eletrica_valor": "48.06",
+                    "eng_sceee_ims_qtd": 250,
+                    "eng_sceee_ims_valor": "128.21",
+                    "eng_compensada_qtd": 250,
+                    "eng_compensada_valor": "-121.83",
+                    "contrib_ilum_publica_valor": "41.19",
+                    "pdf": {
+                        "type": "Buffer",
+                        "data": [
+                            74,
+                            86,
+                            ...
+                        ]
+                    }
+                }
+            ]
+        }
+
+- **GET /dados/:numero_cliente**
+
+    Rota para obter os dados da fatura de energia do numero_cliente
+
+    **Exemplo de resposta:**
+
+    ```json
+
+        {
+            "dados": [
+                {
+                    "id": 1,
+                    "numero_cliente": "7204076116",
+                    "mes_referencia": "2024-03-01",
+                    "eng_eletrica_qtd": 50,
+                    "eng_eletrica_valor": "47.92",
+                    "eng_sceee_ims_qtd": 504,
+                    "eng_sceee_ims_valor": "257.74",
+                    "eng_compensada_qtd": 504,
+                    "eng_compensada_valor": "-245.61",
+                    "contrib_ilum_publica_valor": "49.43",
+                    "pdf": {
+                        "type": "Buffer",
+                        "data": [
+                            74,
+                            86,
+                            ...
+                        ]
+                    }
+                }
+            ]
+        }
+
+- **POST /extraiDadosPdfUnico**
+
+    Rota para extrair dados de um único PDF passando o local do arquivo
+
+**Parâmetros do corpo (JSON):**
+        
+    ```json
+        {
+            "caminho": "C:/Users/nome do usuario/Downloads/3001422762-01-2024.pdf"
+        }
+
+**Exemplo de resposta:**
+
+    ```json
+    {
+        "message": "Dados extraídos e cadastrados com sucesso!",
+        "resultado": {
+            "message": "Cadastrado com sucesso!",
+            "dado": {
+                "id": 25,
+                "numero_cliente": "7202210726",
+                "mes_referencia": "2024-01-01",
+                "eng_eletrica_qtd": 100,
+                "eng_eletrica_valor": "95.52",
+                "eng_sceee_ims_qtd": 2300,
+                "eng_sceee_ims_valor": "1172.31",
+                "eng_compensada_qtd": 2300,
+                "eng_compensada_valor": "-1120.85",
+                "contrib_ilum_publica_valor": "40.45",
+                "pdf": {
+                    "type": "Buffer",
+                    "data": [
+                        74,
+                        86,
+                        ...,
+                    ]
+                }
+            }
+        }
+    }
+
+- **POST /extraiDadosPdfLote**
+
+    Rota para extrair dados de um lote de PDFs passando o local da pasta com tdos ps PDFs
+
+**Parâmetros do corpo (JSON):**
+        
+    ```json
+    {
+        "caminho": "C:/Users/nome do usuario/Desktop/faturas"
+    }
+
+**Exemplo de resposta:**
+
+    ```json
+    {
+        "message": "Processamento concluído!",
+        "resultados": [
+            {
+                "arquivo": "3001116735-01-2024.pdf"
+            },
+            {
+                "arquivo": "3001116735-02-2024.pdf"
+            },
+            {
+                "arquivo": "3001116735-03-2024.pdf"
+            }
+        ]
+    }
 
 ## Scripts Disponíveis
 - **npm run dev**: Inicia a aplicação em modo de desenvolvimento com nodemon.
@@ -89,6 +252,7 @@ utils/: Funções utilitárias que auxiliam no processamento de dados.
 - **sequelize**: ORM para interação com o banco de dados.
 
 ## Migrações
+
 As migrações estão localizadas no diretório migrations/. Para criar uma nova migração, execute:
 
     ```bash
@@ -103,3 +267,9 @@ Se precisar desfazer uma migração:
 
     ```bash
     npx sequelize-cli db:migrate:undo
+
+## Observação
+
+**Utilizar as rotas para popular o banco de dados**
+
+**POST /extraiDadosPdfLote** ou **POST /extraiDadosPdfUnico**

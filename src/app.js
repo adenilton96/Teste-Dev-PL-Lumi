@@ -17,7 +17,6 @@ app.get("/dados/:numero_cliente", async (req, res) => {
    }
 });
 
-
 // Rota para obter os dados de todas as fatura de energia
 app.get("/dados", async (req, res) => {
     try {
@@ -28,7 +27,7 @@ app.get("/dados", async (req, res) => {
     }
 });
 
-// Rota para extrair dados de um único PDF
+// Rota para extrair dados de um único PDF passando o local do arquivo
 app.post("/extraiDadosPdfUnico", async (req, res) => {
     try {
         const dados = await GetDadospdfController.extrairDadosPDF(req.body.caminho, res);
@@ -38,23 +37,13 @@ app.post("/extraiDadosPdfUnico", async (req, res) => {
     }
 });
 
-// Rota para extrair dados de um lote de PDFs
+// Rota para extrair dados de um lote de PDFs passando o local da pasta com tdos ps PDFs
 app.post("/extraiDadosPdfLote", async (req, res) => {
     try {
         const dados = await GetDadospdfController.extrairDadosPDFLote(req.body, res);
         return res.status(200).json(dados);
     } catch (error) {
         return res.status(500).json({ message: 'Erro ao extrair dados de lote de PDFs', error: error.message });
-    }
-});
-
-// Rota para inserir os dados da fatura em formato JSON
-app.post("/dadosJson", async (req, res) => {
-    try {
-        const resultado = await DadosContaController.inserirDados(req.body, res);
-        return res.status(201).json({ message: resultado });
-    } catch (error) {
-        return res.status(500).json({ message: 'Erro ao inserir dados', error: error.message });
     }
 });
 
