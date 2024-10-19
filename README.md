@@ -284,6 +284,6 @@ Se precisar desfazer uma migração:
         
     ```json
     {
-        "caminho": ""C:\Users\caminho para o diretorio\Desktop\Teste-Dev PL - Lumi\public\faturas""
+        "caminho": "C:\Users\caminho para o diretorio\Desktop\Teste-Dev PL - Lumi\public\faturas"
     }
     
