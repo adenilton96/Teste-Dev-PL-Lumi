@@ -9,6 +9,7 @@ Utilizamos Node.js.
     ├───models
     ├───node_modules
     ├───public
+    |   └───faturas
     ├───seeders
     └───src
         ├───config
@@ -273,3 +274,16 @@ Se precisar desfazer uma migração:
 **Utilizar as rotas para popular o banco de dados**
 
 **POST /extraiDadosPdfLote** ou **POST /extraiDadosPdfUnico**
+
+- na pasta **fatuars** dentro de **public** tem dinponivel amgumas faturas de exemplo
+    pode ser camado a rota
+    
+    **POST /extraiDadosPdfLote**
+    
+    **Parâmetros do corpo (JSON):**
+        
+    ```json
+    {
+        "caminho": ""C:\Users\caminho para o diretorio\Desktop\Teste-Dev PL - Lumi\public\faturas""
+    }
+    
