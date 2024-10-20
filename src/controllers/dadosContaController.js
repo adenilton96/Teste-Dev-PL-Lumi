@@ -2,18 +2,26 @@ import { DadosFaturaEnergia } from '../models/DadosFaturaEnergia.js';
 import { converterParaDecimal } from '../utils/converterParaDecimal.js';
 
 class DadosContaController {
-    // Método para obter dados
-    static async getDados(req, res) {
+    static async getDados(params, res) {
         try {
-            const whereClause = req ? { numero_cliente: req } : {};
-            console.log(whereClause);
+          
+            const numero_cliente = params.numero_cliente; 
+            const mes_referencia = params.mes_referencia;
+            const whereClause = {};
             
+            if (numero_cliente) {
+                whereClause.numero_cliente = numero_cliente;
+            }
+            
+            if (mes_referencia) {
+                whereClause.mes_referencia = mes_referencia;
+            }
+
             const result = await DadosFaturaEnergia.findAll({
                 where: whereClause,
                 order: [['id', 'ASC']]
             });
 
-            // Resposta com os dados recuperados
             return {
                 dados: result
             };
@@ -24,6 +32,7 @@ class DadosContaController {
             };
         }
     }
+
 
     // Método para inserir dados
     static async inserirDados(dados, res) {

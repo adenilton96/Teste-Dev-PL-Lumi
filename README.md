@@ -60,7 +60,7 @@ utils/: Funções utilitárias que auxiliam no processamento de dados.
 
 1.**No arquivo .env_dev, renomear para .evn e adicione as configurações de conexão com o banco de dados:**
 
-    PORT=3000
+    PORT=8000
     DB_NAME=nome_do_banco
     DB_USER=seu_usuario
     DB_PWD=sua_senha
@@ -139,7 +139,7 @@ Aqui estão as rotas disponíveis na aplicação:
 
 - **GET /dados/:numero_cliente**
 
-    Rota para obter os dados da fatura de energia do numero_cliente
+    Rota para obter os dados das faturas de energia do numero_cliente
 
     **Exemplo de resposta:**
 
@@ -169,6 +169,40 @@ Aqui estão as rotas disponíveis na aplicação:
                 }
             ]
         }
+
+- **GET /dados/:numero_cliente/:mes_referencia**
+
+    Rota para obter os dados da fatura de energia do numero_cliente do mês imformado
+
+    **Exemplo de resposta:**
+
+    ```json
+
+        {
+            "dados": [
+                {
+                    "id": 1,
+                    "numero_cliente": "7204076116",
+                    "mes_referencia": "2024-03-01",
+                    "eng_eletrica_qtd": 50,
+                    "eng_eletrica_valor": "47.92",
+                    "eng_sceee_ims_qtd": 504,
+                    "eng_sceee_ims_valor": "257.74",
+                    "eng_compensada_qtd": 504,
+                    "eng_compensada_valor": "-245.61",
+                    "contrib_ilum_publica_valor": "49.43",
+                    "pdf": {
+                        "type": "Buffer",
+                        "data": [
+                            74,
+                            86,
+                            ...
+                        ]
+                    }
+                }
+            ]
+        }
+
 
 - **POST /extraiDadosPdfUnico**
 
@@ -251,6 +285,7 @@ Aqui estão as rotas disponíveis na aplicação:
 - **pdfjs-dist**: Biblioteca para manipular PDFs.
 - **pg**: Driver para PostgreSQL.
 - **sequelize**: ORM para interação com o banco de dados.
+- **cors**: é uma funcionalidade de segurança que permite que aplicativos de um domínio acessem recursos de outro domínio.
 
 ## Migrações
 
@@ -276,9 +311,9 @@ Se precisar desfazer uma migração:
 **POST /extraiDadosPdfLote** ou **POST /extraiDadosPdfUnico**
 
 - na pasta **fatuars** dentro de **public** tem dinponivel amgumas faturas de exemplo
-    pode ser camado a rota
+    pode ser chamado a rota
     
-    **POST http://localhost:3000/extraiDadosPdfLote**
+    **POST http://localhost:8000/extraiDadosPdfLote**
     
     **Parâmetros do corpo (JSON):**
         

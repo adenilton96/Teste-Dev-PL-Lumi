@@ -1,8 +1,9 @@
 import fs from 'fs';
+import path from 'path';
 import { getDocument } from 'pdfjs-dist';
 import DadosContaController from './dadosContaController.js';
 import { converterMesAnoParaData } from '../utils/fomataData.js';
-import path from 'path';
+
 
 class GetDadospdfController {
     static async extrairDadosPDF(pdfPath, res) {
