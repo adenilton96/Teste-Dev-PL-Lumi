@@ -14,7 +14,8 @@ class GetDadospdfController {
             }
 
             const fdfData = fs.readFileSync(pdfPath);
-            const base64Data = fdfData.toString('base64');
+            const pdfBuffer = Buffer.from(fdfData);
+           
             const data = new Uint8Array(fdfData);
             const loadingTask = getDocument(data);
 
@@ -31,7 +32,7 @@ class GetDadospdfController {
             }
 
             // Extrai e processa os dados
-            const dadosExtraidos = this.processarDados(textContent, base64Data);
+            const dadosExtraidos = this.processarDados(textContent, pdfBuffer);
 
             // Insere os dados no banco
             const resultado = await DadosContaController.inserirDados(dadosExtraidos, res);
