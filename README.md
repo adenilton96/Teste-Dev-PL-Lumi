@@ -15,6 +15,7 @@ Utilizamos Node.js.
         ├───config
         ├───controllers
         ├───models
+        ├───routes
         └───utils
 
 ## Descrição dos Diretórios
