@@ -45,12 +45,12 @@ utils/: Funções utilitárias que auxiliam no processamento de dados.
 1.**Clone o repositório:**
 
     ```bash
-    git clone https://github.com/adenilton96/Teste-Dev-PL-Lumi.git
+    git clone https://github.com/adenilton96/teste-dev-pl-energia-back-end-api.git
 
 2.**Navegue até o diretório do projeto:**
     
     ```bash
-        cd Teste-Dev-PL-Lumi
+        cd teste-dev-pl-energia-back-end-api
 
 3.**Instale as dependências:**
     
@@ -320,6 +320,6 @@ Se precisar desfazer uma migração:
         
     ```json
     {
-        "caminho": "C:/Users/caminho para o diretorio/Desktop/Teste-Dev PL - Lumi/public/faturas"
+        "caminho": "C:/Users/caminho para o diretorio/public/faturas"
     }
     
